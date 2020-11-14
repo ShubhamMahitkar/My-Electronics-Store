@@ -1,0 +1,145 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <style>
+          body{
+              background: url({% static "images/abstract-antique-backdrop-background-129731.jpg" %});
+          }
+          td{
+              text-align: center;
+              color: darkorchid;
+          }
+          .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+}
+          .left-column {
+  width: 65%;
+  position: relative;
+}
+
+.right-column {
+  width: 35%;
+  margin-top: 60px;
+}
+          .left-column img {
+  position: absolute;
+  left: 40px;
+  top: 60px;
+  {#opacity: 0;#}
+  transition: all 0.3s ease;
+}
+
+.left-column img.active {
+  opacity: 1;
+}
+          .product-description {
+  border-bottom: 1px solid #E1E8EE;
+  margin-bottom: 20px;
+}
+.product-description span {
+  font-size: 32px;
+  color: darkcyan;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.product-description h1 {
+  font-weight: 300;
+  font-size: 52px;
+  color: #43484D;
+  letter-spacing: -2px;
+}
+.product-description p {
+  font-size: 15px;
+  font-weight: 300;
+  color: darkblue;
+  line-height: 24px;
+    font-family: "Arial Narrow";
+}
+      </style>
+    <title>Homepage</title>
+  </head>
+  <body>
+  <table border="0" align="center">
+      <tr>
+          <th colspan='2'>
+              {% include 'head.html' %}
+          </th>
+      </tr>
+      <tr><th align="center" style="width: 100%">
+           {% include 'manu.html' %}
+      </th></tr>
+  <tr>
+          <th>
+              {% if data %}
+                  <br><br>
+               <table align="center" border="0">
+                   <tr><th>
+  <table align="center" border="0" width="1200">
+      <tr style="background: burlywood">
+          <th style="text-align:right; margin-left:80px" colspan="4">
+              <h1 style="text-align: center;font-family: 'Agency FB';color:darkorchid;font-size: 60px;"><b>View Product</b></h1>
+        {% if msg %}
+          <div class="alert alert-warning" role="alert">
+                    {{ msg }}
+          </div>
+        {% endif %}
+          </th>
+      </tr>
+             {% for x in data %}
+                              <tr><th>
+                  <main class="container">
+  <div class="left-column">
+    <img data-image="black"  src="{{ x.img.url}}" height="300" width="330" style="object-fit: contain">
+  </div>
+  <div class="right-column">
+      <div class="product-description">
+      <span>{{x.name}}</span>
+      <h1>{{ x.category }}</h1>
+      <p>{{ x.details_description }}</p>
+    </div>
+    <div class="product-configuration">
+      <!-- Product Color -->
+      <div class="product-color">
+          <span style="color: darkslategray"><b>ProductId:{{x.id}}</b></span>
+      </div>
+    </div>
+    <div class="product-price">
+        <span style="color: blueviolet">Price:<b style="color: olivedrab">{{ x.price }}</b></span>
+        <br>
+                                   <input type="hidden" name="uname" value="{{ msg.name }}">
+                              <input type="hidden" name="pid" value="{{ x.id }}">
+                          <a href="{% url 'cart_added' %}?pid={{ x.id }}" class="btn btn-info">Add To Cart</a>
+                          <br>
+    </div>
+  </div>
+</main>
+                 <br>
+              </th>
+         </tr>
+
+      {% endfor %}
+ </table>
+          {% endif %}
+
+              </th></tr>
+              </table></th></tr></table>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  </body><br><br>
+<footer style="text-align: center"><span>&copy;Copyright AllRight Reserved</span></footer>
+</html>

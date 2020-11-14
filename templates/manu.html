@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="text-align: center;">
+    <div style="text-align: center">
+<nav id="navbar-example2"class="navbar navbar-light" style="background-color: #e3f2fd;">
+
+  <ul class="nav nav-pills" >
+          <li class="nav-item" >
+              <a class="nav-link" href="{% url 'cart_items' %}" >Home</a>
+          </li>
+            <li class="nav-item" style="margin-left:65px">
+                <a class="nav-link"href="{% url 'views_product' %}?cate=Mobiles" >Mobiles</a>
+             </li>
+      <li class="nav-item" style="margin-left:60px">
+                <a class="nav-link" href="{% url 'views_product' %}?cate=Laptops" >Laptops</a>
+        </li>
+      <li class="nav-item" style="margin-left:60px">
+                <a class="nav-link" href="{% url 'views_product' %}?cate=Camera" >Camera</a>
+        </li>
+      <li class="nav-item" style="margin-left:100px">
+      <a class="nav-link" href="{% url 'views_product' %}?cate=Watches" >Watches</a>
+ </li>
+      <li class="nav-item" style="margin-left:100px">
+      <a class="nav-link" href="{% url 'user_logout' %}?cate=Watches" >Logout</a>
+ </li>
+       <li class="nav-item" style="margin-left:50px;font-family: 'Agency FB';color: darkred">
+      <a class="nav-link" >{{ request.session.user_id }}</a>
+ </li>
+       </ul></nav></div>
+</div>
+</body>
+</html>

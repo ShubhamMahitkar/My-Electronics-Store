@@ -1,0 +1,239 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <style>
+          body{
+              background-image: url({% static "images/abstract-antique-backdrop-background-129731.jpg" %});
+          }
+             .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+}
+          .left-column {
+  width: 65%;
+  position: relative;
+}
+
+.right-column {
+  width: 35%;
+  margin-top: 60px;
+}
+          .left-column img {
+  position: absolute;
+  left: 40px;
+  top: 60px;
+  {#opacity: 0;#}
+  transition: all 0.3s ease;
+}
+
+.left-column img.active {
+  opacity: 1;
+}
+          .product-description {
+  border-bottom: 1px solid #E1E8EE;
+  margin-bottom: 20px;
+}
+.product-description span {
+  font-size: 32px;
+  color: darkcyan;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.product-description h1 {
+  font-weight: 300;
+  font-size: 52px;
+  color: #43484D;
+  letter-spacing: -2px;
+}
+.product-description p {
+  font-size: 15px;
+  font-weight: 300;
+  color: darkblue;
+  line-height: 24px;
+    font-family: "Arial Narrow";
+}
+      </style>
+    <title>Homepage</title>
+  </head>
+  <body>
+  {% if request.session.user_id %}
+  <table align="center" border="0" width="1200">
+      <tr>
+          <th colspan="2">
+              {% include 'head.html' %}
+          </th>
+      </tr>
+      <tr>
+          <th>
+              {% include 'manu.html' %}
+          </th>
+      </tr>
+      <tr>
+          <th>
+              <table align="center" border="0" width="1200">
+                   <tr><th>
+              <table border="0" width="1200" align="center">
+                  <tr style="background: burlywood">
+                      <th style="text-align:right; margin-left:80px" colspan="4">
+              <h1 style="text-align: center;font-family: 'Agency FB';color:darkorchid;font-size: 60px;"><b>Cart Items</b></h1>                          {% if msg %}
+                              <span style="color: darkorchid;">
+                                  {{ msg.name}}  <a href="{% url 'user_login' %}">Logout</a>
+                              </span>
+                        {% endif %}
+                       <a href="{% url 'cart_items' %}">
+      <img src="{% static 'icon/icons8-buying-100.png' %}" width="60px"></a>:{{ count }}
+                      </th>
+                  </tr>
+                  <tr>
+                      <th>
+                          {% for x in data %}
+                              <tr><th>
+                  <main class="container">
+  <div class="left-column">
+    <img data-image="black" src="{{x.img.url}}" height="300" width="330" style="object-fit: contain;">
+  </div>
+  <div class="right-column">
+      <div class="product-description">
+      <span>{{x.name}}</span>
+      <h1>{{ x.category }}</h1>
+    </div>
+    <div class="product-configuration">
+
+      <!-- Product Color -->
+      <div class="product-color">
+          <span style="color: darkslategray"><b>ProductId:{{ x.id }}</b></span>
+      </div>
+
+      <div class="cable-config">
+        <p >{{ x.details_description }}</p>
+      </div>
+    </div>
+    <div class="product-price">
+        <span style="color: blueviolet">Price:<b style="color: olivedrab">{{ x.price }}</b></span>
+        <br>
+                  <a href="{% url 'remove_cart'%}?pid={{ x.id }}" class="btn btn-danger">Remove From Cart</a>
+    </div>
+  </div>
+</main>
+                                  {% if forloop.last %}
+                                      <br><br>
+                                      {% else %}
+                                      <h1 style="text-align: center;color: blue">+</h1>
+                                  {% endif %}
+              </th>
+         </tr>
+      {% endfor %}
+                  </table>
+                   </th>
+                   </tr>
+
+
+
+  </table>
+              <table  border="2" align="center" width="800">
+        <tr><th colspan="2">
+            <h1 style="text-align: center;font-family: 'Agency FB';color:darkorchid"><b>Final Bill Info</b></h1>
+            <span style="text-align: center;font-family: 'Arial Black';color: darkcyan">Name:{{ user.name }}</span>
+        </th></tr>
+                  <tr>
+                      <th>Address</th>
+                  <th colspan="2">
+                      <input type="text" readonly name="address" value="{{ user.address }}" style="width: 350px;background: transparent"></th>
+                  </tr>
+                  <tr>
+                      <th>
+                          Contact Number:
+                      </th>
+                      <td>
+                          {{ user.contact_no}}
+                      </td>
+                  </tr>
+
+                  <tr>
+                      <th>
+                          Product Quantity:
+                      </th>
+                      <td>
+                          {{ count }}
+                      </td>
+                  </tr>
+                  <tr>
+                      <th>
+                          Actual Product Price:
+                      </th>
+                      <th>
+                          {{ actual }} Rupees
+                      </th>
+                  </tr>
+                   <tr>
+                      <th>
+                          Discounted Amount:
+                      </th>
+                      <th>
+                          {% if actual > 10000 %}
+                          500 Rupees
+                              {% else %}
+                          0 Rupees
+                              {% endif %}
+                      </th>
+                  </tr>
+                  <tr>
+                      <th>
+                          Your Pincode:
+                      </th>
+                      <th>
+                      <input type="number" readonly value="{{ user.pincode }}" name="pincode" style="background: transparent;">
+                      </th>
+                  </tr>
+                  <tr>
+                      <th>
+                        Payment Mode:
+                      <th>
+                      <select required name="payment" style="background: transparent;">
+                      <option>Cash On Delivery</option>
+                      </select>
+                  </th>
+                      </th>
+                  </tr>
+                  <tr>
+                      <tr>
+                      <th>
+                          Final Amount:
+                      </th>
+                      <td>
+                           {{ total_bill }} Rupees
+                      </td>
+                  </tr>
+                      <th style="text-align: center;"colspan="2">
+                                                    <br>
+                         <a href="{% url 'confirm_bill' %}" type="submit" class="btn btn-info">Confirm </a>
+                      </th>
+                  </tr>
+              </table>
+          </th>
+      </tr>
+
+<tr>
+    <th>
+    </th>
+</tr>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  </table>
+  </body>
+  {% endif %}
+<footer style="text-align: center"><span>&copy;Copyright AllRight Reserved</span></footer>
